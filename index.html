@@ -3,84 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Sites que Geram Vendas</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
+
 body {
   margin:0;
   font-family:'Inter',sans-serif;
-  background: radial-gradient(circle at top, #0f0f0f, #000);
+  background:#000;
   color:#fff;
+  overflow-x:hidden;
 }
 
-/* HERO */
+/* HERO VIDEO */
 .hero {
+  position:relative;
+  height:100vh;
   display:flex;
+  justify-content:center;
   align-items:center;
-  justify-content:space-between;
-  padding:60px;
-  gap:40px;
+  text-align:center;
 }
 
-.hero-text {
-  max-width:500px;
+.hero video {
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-2;
+}
+
+.overlay {
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:linear-gradient(to top, #000, rgba(0,0,0,0.6));
+  z-index:-1;
 }
 
 .hero h1 {
-  font-size:48px;
+  font-size:60px;
 }
 
 .glow {
   color:#00ff88;
-  text-shadow:0 0 15px #00ff88;
+  text-shadow:0 0 20px #00ff88;
 }
 
-.hero p {
-  color:#aaa;
-  margin-top:15px;
-}
-
-/* IMAGEM */
-.hero img {
-  width:500px;
-  border-radius:20px;
-  box-shadow:0 0 40px rgba(0,255,136,0.4);
-}
-
-/* BOTÃO */
 .btn {
   display:inline-block;
-  margin-top:25px;
-  padding:15px 30px;
+  margin-top:30px;
+  padding:18px 40px;
   background:linear-gradient(90deg,#00ff88,#00cc66);
+  border-radius:12px;
   color:#000;
-  border-radius:10px;
-  text-decoration:none;
   font-weight:bold;
+  text-decoration:none;
   box-shadow:0 0 20px #00ff88;
   transition:.3s;
 }
 
 .btn:hover {
-  transform:scale(1.05);
+  transform:scale(1.1);
 }
 
 /* CARDS */
 .cards {
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:30px;
-  padding:50px;
+  gap:40px;
+  padding:80px;
 }
 
 .card {
   background:rgba(255,255,255,0.03);
-  backdrop-filter:blur(10px);
-  padding:30px;
+  backdrop-filter:blur(15px);
+  padding:40px;
   border-radius:20px;
   border:1px solid rgba(255,255,255,0.1);
+  transition:.4s;
+}
+
+.card:hover {
+  transform:translateY(-10px);
+  box-shadow:0 0 40px rgba(0,255,136,0.3);
 }
 
 .old {
@@ -89,25 +98,53 @@ body {
 }
 
 .new {
-  font-size:45px;
+  font-size:60px;
   color:#00ff88;
-  font-weight:800;
+}
+
+.timer {
+  color:#ff4444;
+}
+
+/* ROI */
+.roi {
+  text-align:center;
+  padding:80px;
+}
+
+.roi h2 {
+  font-size:40px;
+}
+
+/* SCROLL ANIMATION */
+.fade {
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s;
+}
+
+.fade.show {
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* WHATS FIXO */
+.whats {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#00ff88;
+  padding:18px;
+  border-radius:50%;
+  box-shadow:0 0 20px #00ff88;
 }
 
 /* MOBILE */
 @media(max-width:768px){
-  .hero {
-    flex-direction:column;
-    text-align:center;
-    padding:30px;
-  }
-  .hero img {
-    width:100%;
-  }
-  .cards {
-    grid-template-columns:1fr;
-  }
+  .hero h1 {font-size:32px;}
+  .cards {grid-template-columns:1fr; padding:20px;}
 }
+
 </style>
 </head>
 
@@ -115,53 +152,102 @@ body {
 
 <!-- HERO -->
 <section class="hero">
+  <video autoplay muted loop>
+    <source src="https://cdn.coverr.co/videos/coverr-digital-network-5177/1080p.mp4">
+  </video>
 
-<div class="hero-text">
-  <h1>SITES QUE <span class="glow">VENDEM 24H</span></h1>
-  <p>Transforme visitantes em clientes automaticamente</p>
+  <div class="overlay"></div>
 
-  <a href="https://wa.me/5513982332023" class="btn">
-    🚀 Quero Meu Site
-  </a>
-</div>
+  <div>
+    <h1>SITES QUE <span class="glow">VENDEM TODOS OS DIAS</span></h1>
+    <p>Transforme visitantes em clientes automaticamente</p>
 
-<!-- IMAGEM -->
-<img src="https://images.unsplash.com/photo-1559028012-481c04fa702d" alt="Site profissional">
-
+    <a href="https://wa.me/5513982332023?text=Quero%20um%20site%20profissional" class="btn">
+      🚀 COMEÇAR AGORA
+    </a>
+  </div>
 </section>
 
 <!-- CARDS -->
-<section class="cards">
+<section class="cards fade">
 
 <div class="card">
-  <h2>Site Profissional</h2>
+  <h2>Site de Conversão</h2>
+
   <p class="old">De R$1000</p>
   <p class="new">R$500</p>
+  <p class="timer" id="timer"></p>
 
   <ul>
-    <li>✔ Design moderno</li>
-    <li>✔ Conversão otimizada</li>
+    <li>✔ Estrutura psicológica</li>
+    <li>✔ UX premium</li>
     <li>✔ WhatsApp integrado</li>
+    <li>✔ SEO + velocidade</li>
   </ul>
 
-  <a href="https://wa.me/5513982332023" class="btn">Quero site</a>
+  <a href="https://wa.me/5513982332023?text=Quero%20site" class="btn">Quero site</a>
 </div>
 
 <div class="card">
   <h2>Campanha Profissional</h2>
+
   <p class="old">De R$1000</p>
   <p class="new">R$500</p>
 
   <ul>
-    <li>✔ Tráfego pago</li>
-    <li>✔ Estratégia</li>
-    <li>✔ Escala de vendas</li>
+    <li>✔ Criativos que vendem</li>
+    <li>✔ Público certo</li>
+    <li>✔ ROI focado</li>
+    <li>✔ Escala rápida</li>
   </ul>
 
-  <a href="https://wa.me/5513982332023" class="btn">Quero campanha</a>
+  <a href="https://wa.me/5513982332023?text=Quero%20campanha" class="btn">Quero campanha</a>
 </div>
 
 </section>
+
+<!-- ROI -->
+<section class="roi fade">
+  <h2>🔥 +320% aumento médio em vendas</h2>
+  <p>Mais clientes, mais lucro, mais escala</p>
+</section>
+
+<!-- CTA FINAL -->
+<section class="hero">
+  <div>
+    <h1>PRONTO PRA <span class="glow">ESCALAR?</span></h1>
+    <a href="https://wa.me/5513982332023" class="btn">Falar no WhatsApp</a>
+  </div>
+</section>
+
+<a href="https://wa.me/5513982332023" class="whats">💬</a>
+
+<script>
+// CONTADOR
+let time = new Date().getTime() + (4*60*60*1000);
+
+setInterval(()=>{
+ let now = new Date().getTime();
+ let diff = time - now;
+
+ let h = Math.floor(diff/(1000*60*60));
+ let m = Math.floor((diff%(1000*60*60))/(1000*60));
+ let s = Math.floor((diff%(1000*60))/1000);
+
+ document.getElementById("timer").innerHTML =
+ "Promo acaba em: "+h+"h "+m+"m "+s+"s";
+},1000);
+
+// ANIMAÇÃO SCROLL
+window.addEventListener('scroll', ()=>{
+  document.querySelectorAll('.fade').forEach(el=>{
+    let top = el.getBoundingClientRect().top;
+    if(top < window.innerHeight - 100){
+      el.classList.add('show');
+    }
+  });
+});
+</script>
 
 </body>
 </html>
