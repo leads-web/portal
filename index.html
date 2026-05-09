@@ -1,450 +1,450 @@
-/* ============================================================
-   PIEVETTI STUDIO — MAIN SCRIPT
-   Loader · Custom Cursor · Canvas Hero · Reveal · Count-up
-   Magnetic · Parallax · Nav scroll · Mobile menu
-   ============================================================ */
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pievetti Studio — Tráfego que Converte</title>
+<meta name="description" content="Especialistas em tráfego pago que transforma cliques em clientes. Google Ads, Meta Ads e estratégia digital de alto nível.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-(function () {
-  'use strict';
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-inner">
+    <div class="loader-logo">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <rect x="0" y="0" width="14" height="14" fill="white" opacity="0.9"/>
+        <rect x="18" y="0" width="14" height="14" fill="white" opacity="0.5"/>
+        <rect x="0" y="18" width="14" height="14" fill="white" opacity="0.5"/>
+        <rect x="18" y="18" width="14" height="14" fill="white" opacity="0.9"/>
+      </svg>
+    </div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+    <span class="loader-text">Carregando experiência</span>
+  </div>
+</div>
 
-  /* ──────────────────────────────────────────
-     LOADER
-  ────────────────────────────────────────── */
-  const loader = document.getElementById('loader');
-  const loaderFill = document.querySelector('.loader-fill');
+<!-- CURSOR CUSTOM -->
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
 
-  let progress = 0;
-  const fillInterval = setInterval(() => {
-    progress += Math.random() * 18 + 4;
-    if (progress >= 100) {
-      progress = 100;
-      clearInterval(fillInterval);
-      setTimeout(() => {
-        loader.classList.add('hidden');
-        initAnimations();
-      }, 300);
-    }
-    loaderFill.style.width = Math.min(progress, 100) + '%';
-  }, 80);
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+        <rect x="0" y="0" width="14" height="14" fill="currentColor" opacity="0.9"/>
+        <rect x="18" y="0" width="14" height="14" fill="currentColor" opacity="0.45"/>
+        <rect x="0" y="18" width="14" height="14" fill="currentColor" opacity="0.45"/>
+        <rect x="18" y="18" width="14" height="14" fill="currentColor" opacity="0.9"/>
+      </svg>
+      <span>Pievetti Studio</span>
+    </a>
+    <div class="nav-links">
+      <a href="#servicos">Serviços</a>
+      <a href="#resultados">Resultados</a>
+      <a href="#processo">Processo</a>
+      <a href="https://wa.me/5511999999999?text=Olá,%20vim%20pelo%20site%20e%20quero%20saber%20mais" target="_blank" class="nav-cta" data-magnetic>Falar com especialista</a>
+    </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="#servicos" class="nav-mobile-link">Serviços</a>
+    <a href="#resultados" class="nav-mobile-link">Resultados</a>
+    <a href="#processo" class="nav-mobile-link">Processo</a>
+    <a href="https://wa.me/5511999999999?text=Olá,%20vim%20pelo%20site%20e%20quero%20saber%20mais" target="_blank" class="nav-mobile-cta">Falar com especialista →</a>
+  </div>
+</nav>
 
-  /* ──────────────────────────────────────────
-     CUSTOM CURSOR
-  ────────────────────────────────────────── */
-  const cursor = document.getElementById('cursor');
-  const cursorTrail = document.getElementById('cursor-trail');
+<!-- HERO -->
+<section id="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-grid-overlay"></div>
 
-  if (cursor && cursorTrail) {
-    let mouseX = 0, mouseY = 0;
-    let trailX = 0, trailY = 0;
+  <div class="hero-content">
+    <div class="hero-badge" data-reveal>
+      <span class="badge-dot"></span>
+      <span>Resultados em 30 dias ou devolvemos</span>
+    </div>
 
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursor.style.left = mouseX + 'px';
-      cursor.style.top = mouseY + 'px';
-    });
+    <h1 class="hero-headline" data-reveal>
+      <span class="line-wrap"><span class="line">Tráfego pago</span></span>
+      <span class="line-wrap"><em class="hero-italic">que realmente</em></span>
+      <span class="line-wrap"><span class="line hero-gradient-text">converte.</span></span>
+    </h1>
 
-    function updateTrail() {
-      trailX += (mouseX - trailX) * 0.1;
-      trailY += (mouseY - trailY) * 0.1;
-      cursorTrail.style.left = trailX + 'px';
-      cursorTrail.style.top = trailY + 'px';
-      requestAnimationFrame(updateTrail);
-    }
-    updateTrail();
+    <p class="hero-sub" data-reveal>
+      Transformamos investimento em anúncios em crescimento real.<br>
+      Google Ads, Meta Ads e estratégia digital de alto nível.
+    </p>
 
-    // Hover states for interactive elements
-    const hoverEls = document.querySelectorAll('a, button, [data-magnetic]');
-    hoverEls.forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-    });
-  }
+    <div class="hero-actions" data-reveal>
+      <a href="https://wa.me/5511999999999?text=Olá,%20vim%20pelo%20site%20e%20quero%20diagnóstico%20gratuito" target="_blank" class="btn-primary" data-magnetic>
+        <span>Diagnóstico gratuito</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#resultados" class="btn-ghost">
+        <span>Ver resultados</span>
+      </a>
+    </div>
 
-  /* ──────────────────────────────────────────
-     HERO CANVAS — Particle Field
-     Fine dots forming a breathing, reactive grid
-  ────────────────────────────────────────── */
-  function initHeroCanvas() {
-    const canvas = document.getElementById('heroCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    <div class="hero-metrics" data-reveal>
+      <div class="metric">
+        <span class="metric-num" data-count="340">0</span><span class="metric-sym">%</span>
+        <span class="metric-label">ROI médio</span>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric">
+        <span class="metric-num" data-count="180">0</span><span class="metric-sym">+</span>
+        <span class="metric-label">Clientes ativos</span>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric">
+        <span class="metric-num" data-count="12">0</span><span class="metric-sym">M+</span>
+        <span class="metric-label">Em receita gerada</span>
+      </div>
+    </div>
+  </div>
 
-    let W, H, particles;
-    let mouseX = -9999, mouseY = -9999;
+  <div class="hero-scroll-indicator">
+    <div class="scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
 
-    function resize() {
-      W = canvas.width = canvas.offsetWidth;
-      H = canvas.height = canvas.offsetHeight;
-      initParticles();
-    }
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-inner">
+      <span>Google Ads</span><span class="dot">·</span>
+      <span>Meta Ads</span><span class="dot">·</span>
+      <span>Performance Max</span><span class="dot">·</span>
+      <span>Search Campaigns</span><span class="dot">·</span>
+      <span>Remarketing</span><span class="dot">·</span>
+      <span>Display Network</span><span class="dot">·</span>
+      <span>YouTube Ads</span><span class="dot">·</span>
+      <span>Shopping Ads</span><span class="dot">·</span>
+      <span>Google Ads</span><span class="dot">·</span>
+      <span>Meta Ads</span><span class="dot">·</span>
+      <span>Performance Max</span><span class="dot">·</span>
+      <span>Search Campaigns</span><span class="dot">·</span>
+      <span>Remarketing</span><span class="dot">·</span>
+      <span>Display Network</span><span class="dot">·</span>
+      <span>YouTube Ads</span><span class="dot">·</span>
+      <span>Shopping Ads</span><span class="dot">·</span>
+    </div>
+  </div>
+</div>
 
-    class Particle {
-      constructor() {
-        this.reset(true);
-      }
-      reset(init = false) {
-        this.x = Math.random() * W;
-        this.y = init ? Math.random() * H : H + 10;
-        this.baseX = this.x;
-        this.baseY = this.y;
-        this.size = Math.random() * 1.2 + 0.3;
-        this.opacity = Math.random() * 0.4 + 0.05;
-        this.speed = Math.random() * 0.3 + 0.1;
-        this.vx = (Math.random() - 0.5) * 0.15;
-        this.vy = -(Math.random() * 0.4 + 0.1);
-      }
-      update() {
-        // Drift
-        this.x += this.vx;
-        this.y += this.vy;
+<!-- SERVICES -->
+<section id="servicos" class="section-services">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <span class="section-label">O que fazemos</span>
+      <h2>Especialistas em cada<br><em>canal de aquisição</em></h2>
+    </div>
 
-        // Mouse repulsion
-        const dx = this.x - mouseX;
-        const dy = this.y - mouseY;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
-          const force = (120 - dist) / 120;
-          this.x += dx / dist * force * 1.5;
-          this.y += dy / dist * force * 1.5;
-        }
+    <div class="services-grid">
+      <div class="service-card" data-reveal data-delay="0">
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <span class="service-num">01</span>
+        <h3>Google Ads</h3>
+        <p>Campanhas de search, display, shopping e YouTube otimizadas para máximo ROAS. Estrutura técnica impecável.</p>
+        <div class="service-tags">
+          <span>Search</span><span>Shopping</span><span>Performance Max</span>
+        </div>
+        <div class="service-arrow">→</div>
+      </div>
 
-        if (this.y < -10) this.reset();
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(232, 201, 122, ${this.opacity})`;
-        ctx.fill();
-      }
-    }
+      <div class="service-card" data-reveal data-delay="100">
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><path d="M16 8.99a4 4 0 1 1-4 4 4 4 0 0 1 4-4zM17.5 6.5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <span class="service-num">02</span>
+        <h3>Meta Ads</h3>
+        <p>Facebook e Instagram com criatividade orientada por dados. Prospecting e remarketing de alto desempenho.</p>
+        <div class="service-tags">
+          <span>Facebook</span><span>Instagram</span><span>Reels Ads</span>
+        </div>
+        <div class="service-arrow">→</div>
+      </div>
 
-    function initParticles() {
-      const count = Math.floor((W * H) / 9000);
-      particles = Array.from({ length: count }, () => new Particle());
-    }
+      <div class="service-card" data-reveal data-delay="200">
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 3h18v18H3V3zm4 4v10m4-10v10m4-10v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <span class="service-num">03</span>
+        <h3>Estratégia & Analytics</h3>
+        <p>Dashboards em tempo real, análise de funil e otimização contínua baseada em dados, não em achismos.</p>
+        <div class="service-tags">
+          <span>GA4</span><span>Looker Studio</span><span>Tag Manager</span>
+        </div>
+        <div class="service-arrow">→</div>
+      </div>
 
-    // Draw subtle connection lines
-    function drawConnections() {
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 80) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(232, 201, 122, ${0.06 * (1 - dist / 80)})`;
-            ctx.lineWidth = 0.5;
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-    }
+      <div class="service-card service-card--wide" data-reveal data-delay="300">
+        <div class="service-wide-content">
+          <div>
+            <span class="service-num">04</span>
+            <h3>Gestão Full Funnel</h3>
+            <p>Do clique à conversão. Trabalhamos toda a jornada do cliente, desde a atração até o fechamento.</p>
+          </div>
+          <div class="service-wide-visual">
+            <div class="funnel-steps">
+              <div class="funnel-step">
+                <span class="step-dot"></span>
+                <span>Awareness</span>
+              </div>
+              <div class="funnel-connector"></div>
+              <div class="funnel-step">
+                <span class="step-dot"></span>
+                <span>Consideração</span>
+              </div>
+              <div class="funnel-connector"></div>
+              <div class="funnel-step active">
+                <span class="step-dot"></span>
+                <span>Conversão</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="service-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    function animate() {
-      ctx.clearRect(0, 0, W, H);
+<!-- RESULTS -->
+<section id="resultados" class="section-results">
+  <div class="results-bg"></div>
+  <div class="container">
+    <div class="section-header light" data-reveal>
+      <span class="section-label">Resultados reais</span>
+      <h2>Números que<br><em>falam por si</em></h2>
+    </div>
 
-      // Subtle radial glow at bottom center
-      const grd = ctx.createRadialGradient(W / 2, H, 0, W / 2, H, H * 0.6);
-      grd.addColorStop(0, 'rgba(232,201,122,0.04)');
-      grd.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = grd;
-      ctx.fillRect(0, 0, W, H);
+    <div class="results-grid">
+      <div class="result-card" data-reveal data-delay="0">
+        <div class="result-top">
+          <span class="result-industry">E-commerce · Moda</span>
+          <span class="result-badge positive">+412% ROAS</span>
+        </div>
+        <div class="result-metric">
+          <span class="result-before">R$ 8k/mês</span>
+          <div class="result-arrow-icon">→</div>
+          <span class="result-after">R$ 41k/mês</span>
+        </div>
+        <p class="result-desc">Reestruturação completa das campanhas Google Shopping com nova estratégia de segmentação.</p>
+        <div class="result-timeline">Em 60 dias</div>
+      </div>
 
-      drawConnections();
-      particles.forEach(p => { p.update(); p.draw(); });
-      requestAnimationFrame(animate);
-    }
+      <div class="result-card" data-reveal data-delay="100">
+        <div class="result-top">
+          <span class="result-industry">Serviços · Advocacia</span>
+          <span class="result-badge positive">−68% CPL</span>
+        </div>
+        <div class="result-metric">
+          <span class="result-before">R$ 320/lead</span>
+          <div class="result-arrow-icon">→</div>
+          <span class="result-after">R$ 102/lead</span>
+        </div>
+        <p class="result-desc">Otimização radical de campanhas de search com copy de alta conversão e landing pages dedicadas.</p>
+        <div class="result-timeline">Em 45 dias</div>
+      </div>
 
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseX = e.clientX - rect.left;
-      mouseY = e.clientY - rect.top;
-    });
-    canvas.addEventListener('mouseleave', () => { mouseX = -9999; mouseY = -9999; });
+      <div class="result-card" data-reveal data-delay="200">
+        <div class="result-top">
+          <span class="result-industry">SaaS · B2B</span>
+          <span class="result-badge positive">+280% MRR</span>
+        </div>
+        <div class="result-metric">
+          <span class="result-before">R$ 15k MRR</span>
+          <div class="result-arrow-icon">→</div>
+          <span class="result-after">R$ 57k MRR</span>
+        </div>
+        <p class="result-desc">Estratégia omnichannel combinando LinkedIn Ads, Google Search e Meta para aquisição B2B.</p>
+        <div class="result-timeline">Em 90 dias</div>
+      </div>
+    </div>
 
-    window.addEventListener('resize', resize);
-    resize();
-    animate();
-  }
+    <div class="results-cta" data-reveal>
+      <p>Quer ver o que é possível para o seu negócio?</p>
+      <a href="https://wa.me/5511999999999?text=Olá,%20quero%20um%20diagnóstico%20gratuito%20das%20minhas%20campanhas" target="_blank" class="btn-primary btn-light" data-magnetic>
+        <span>Pedir diagnóstico gratuito</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
 
-  /* ──────────────────────────────────────────
-     CTA CANVAS — Slow ambient glow
-  ────────────────────────────────────────── */
-  function initCtaCanvas() {
-    const canvas = document.getElementById('ctaCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let W, H, t = 0;
+<!-- PROCESS -->
+<section id="processo" class="section-process">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <span class="section-label">Como trabalhamos</span>
+      <h2>Um processo construído<br><em>para gerar resultado</em></h2>
+    </div>
 
-    function resize() {
-      W = canvas.width = canvas.offsetWidth;
-      H = canvas.height = canvas.offsetHeight;
-    }
+    <div class="process-list">
+      <div class="process-item" data-reveal data-delay="0">
+        <div class="process-number">01</div>
+        <div class="process-content">
+          <h3>Diagnóstico profundo</h3>
+          <p>Auditamos suas campanhas atuais, analisamos o mercado e mapeamos oportunidades que seus concorrentes não enxergam.</p>
+        </div>
+        <div class="process-line"></div>
+      </div>
+      <div class="process-item" data-reveal data-delay="100">
+        <div class="process-number">02</div>
+        <div class="process-content">
+          <h3>Estratégia personalizada</h3>
+          <p>Montamos um plano sob medida para seu negócio, com metas claras, canais definidos e orçamento otimizado.</p>
+        </div>
+        <div class="process-line"></div>
+      </div>
+      <div class="process-item" data-reveal data-delay="200">
+        <div class="process-number">03</div>
+        <div class="process-content">
+          <h3>Execução técnica</h3>
+          <p>Implementação com rastreamento preciso, estrutura de campanhas avançada e criativos de alta conversão.</p>
+        </div>
+        <div class="process-line"></div>
+      </div>
+      <div class="process-item" data-reveal data-delay="300">
+        <div class="process-number">04</div>
+        <div class="process-content">
+          <h3>Otimização contínua</h3>
+          <p>Monitoramento diário, testes A/B constantes e relatórios transparentes. Seu investimento sempre crescendo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    function animate() {
-      ctx.clearRect(0, 0, W, H);
-      t += 0.005;
+<!-- SOCIAL PROOF -->
+<section class="section-social">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <span class="section-label">Depoimentos</span>
+      <h2>O que nossos clientes<br><em>estão dizendo</em></h2>
+    </div>
 
-      // Slow moving orbs
-      const orbs = [
-        { x: W * 0.3 + Math.sin(t) * W * 0.08, y: H * 0.5 + Math.cos(t * 0.7) * H * 0.2, r: W * 0.25, color: 'rgba(232,201,122,0.04)' },
-        { x: W * 0.7 + Math.cos(t * 1.3) * W * 0.06, y: H * 0.5 + Math.sin(t) * H * 0.15, r: W * 0.2, color: 'rgba(232,201,122,0.025)' },
-      ];
+    <div class="testimonials-grid">
+      <div class="testimonial" data-reveal data-delay="0">
+        <div class="testimonial-stars">★★★★★</div>
+        <p>"Em 2 meses o custo por lead caiu 60% e o volume triplicou. A equipe da Pievetti tem uma visão estratégica que eu nunca tinha visto em outras agências."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">MR</div>
+          <div>
+            <strong>Marcos Ribeiro</strong>
+            <span>CEO · AdvTech Soluções</span>
+          </div>
+        </div>
+      </div>
 
-      orbs.forEach(orb => {
-        const grd = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.r);
-        grd.addColorStop(0, orb.color);
-        grd.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = grd;
-        ctx.fillRect(0, 0, W, H);
-      });
+      <div class="testimonial" data-reveal data-delay="100">
+        <div class="testimonial-stars">★★★★★</div>
+        <p>"O dashboard que eles montaram para mim é incrível. Vejo tudo em tempo real e os resultados falam por si — crescemos 340% em receita no trimestre."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">AL</div>
+          <div>
+            <strong>Ana Luz</strong>
+            <span>Fundadora · Luz Ateliê</span>
+          </div>
+        </div>
+      </div>
 
-      requestAnimationFrame(animate);
-    }
+      <div class="testimonial" data-reveal data-delay="200">
+        <div class="testimonial-stars">★★★★★</div>
+        <p>"Migrei de outra agência que prometia tudo e entregava nada. Com a Pievetti, os primeiros resultados vieram na primeira semana. Sério mesmo."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">FO</div>
+          <div>
+            <strong>Felipe Oliveira</strong>
+            <span>Diretor Comercial · SaaS Hub</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    window.addEventListener('resize', resize);
-    resize();
-    animate();
-  }
+<!-- CTA FINAL -->
+<section class="section-cta">
+  <div class="cta-bg">
+    <canvas id="ctaCanvas"></canvas>
+  </div>
+  <div class="container">
+    <div class="cta-content" data-reveal>
+      <span class="section-label light">Próximo passo</span>
+      <h2 class="cta-headline">Pronto para transformar<br><em>seu negócio?</em></h2>
+      <p class="cta-sub">Diagnóstico gratuito de 30 minutos com nosso time. Sem compromisso.</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/5511999999999?text=Olá,%20quero%20conversar%20sobre%20tráfego%20pago%20para%20meu%20negócio" target="_blank" class="btn-primary btn-light btn-xl" data-magnetic>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.553 4.122 1.52 5.855L0 24l6.335-1.505A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.808 9.808 0 0 1-5.001-1.368l-.358-.213-3.762.894.936-3.659-.234-.376A9.817 9.817 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818 5.418 0 9.818 4.4 9.818 9.818 0 5.418-4.4 9.818-9.818 9.818z"/></svg>
+          <span>Falar no WhatsApp</span>
+        </a>
+        <a href="https://instagram.com/pievetti.studio" target="_blank" class="btn-ghost btn-ghost-light">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><path d="M16 8.99a4 4 0 1 1-4 4 4 4 0 0 1 4-4zM17.5 6.5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>Seguir no Instagram</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
-  /* ──────────────────────────────────────────
-     SCROLL REVEAL
-  ────────────────────────────────────────── */
-  function initReveal() {
-    const els = document.querySelectorAll('[data-reveal]');
-    if (!els.length) return;
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">
+          <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+            <rect x="0" y="0" width="14" height="14" fill="currentColor" opacity="0.9"/>
+            <rect x="18" y="0" width="14" height="14" fill="currentColor" opacity="0.45"/>
+            <rect x="0" y="18" width="14" height="14" fill="currentColor" opacity="0.45"/>
+            <rect x="18" y="18" width="14" height="14" fill="currentColor" opacity="0.9"/>
+          </svg>
+          <span>Pievetti Studio</span>
+        </a>
+        <p>Tráfego pago de alto nível para negócios que querem crescer de verdade.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <span class="footer-col-title">Serviços</span>
+          <a href="#servicos">Google Ads</a>
+          <a href="#servicos">Meta Ads</a>
+          <a href="#servicos">Estratégia Digital</a>
+          <a href="#servicos">Analytics</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Contato</span>
+          <a href="https://wa.me/5511999999999" target="_blank">WhatsApp</a>
+          <a href="https://instagram.com/pievetti.studio" target="_blank">@pievetti.studio</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Pievetti Studio. Todos os direitos reservados.</span>
+      <span>Feito com precisão.</span>
+    </div>
+  </div>
+</footer>
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+<!-- FLOAT CTA -->
+<a href="https://wa.me/5513982332023?text=Olá,%20vim%20pelo%20site" target="_blank" id="floatCTA" class="float-cta" aria-label="Falar no WhatsApp">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.553 4.122 1.52 5.855L0 24l6.335-1.505A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.808 9.808 0 0 1-5.001-1.368l-.358-.213-3.762.894.936-3.659-.234-.376A9.817 9.817 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818 5.418 0 9.818 4.4 9.818 9.818 0 5.418-4.4 9.818-9.818 9.818z"/></svg>
+  <span class="float-pulse"></span>
+</a>
 
-    els.forEach(el => observer.observe(el));
-  }
-
-  /* ──────────────────────────────────────────
-     COUNT UP ANIMATION
-  ────────────────────────────────────────── */
-  function initCountUp() {
-    const nums = document.querySelectorAll('[data-count]');
-    if (!nums.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const target = parseInt(el.dataset.count);
-          let start = 0;
-          const duration = 2000;
-          const startTime = performance.now();
-
-          function tick(now) {
-            const elapsed = now - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            // Ease out expo
-            const eased = 1 - Math.pow(1 - progress, 4);
-            start = Math.floor(eased * target);
-            el.textContent = start;
-            if (progress < 1) requestAnimationFrame(tick);
-          }
-          requestAnimationFrame(tick);
-          observer.unobserve(el);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    nums.forEach(el => observer.observe(el));
-  }
-
-  /* ──────────────────────────────────────────
-     MAGNETIC BUTTONS
-  ────────────────────────────────────────── */
-  function initMagnetic() {
-    const els = document.querySelectorAll('[data-magnetic]');
-    els.forEach(el => {
-      el.addEventListener('mousemove', (e) => {
-        const rect = el.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        const dx = e.clientX - cx;
-        const dy = e.clientY - cy;
-        el.style.transform = `translate(${dx * 0.22}px, ${dy * 0.22}px)`;
-      });
-      el.addEventListener('mouseleave', () => {
-        el.style.transform = '';
-      });
-    });
-  }
-
-  /* ──────────────────────────────────────────
-     NAV SCROLL
-  ────────────────────────────────────────── */
-  function initNav() {
-    const nav = document.getElementById('nav');
-    const hamburger = document.getElementById('hamburger');
-    const navMobile = document.getElementById('navMobile');
-
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 40) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
-    }, { passive: true });
-
-    if (hamburger && navMobile) {
-      hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('open');
-        navMobile.classList.toggle('open');
-      });
-
-      // Close on link click
-      navMobile.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-          hamburger.classList.remove('open');
-          navMobile.classList.remove('open');
-        });
-      });
-    }
-  }
-
-  /* ──────────────────────────────────────────
-     HERO LINE REVEAL
-     Staggers each headline line on load
-  ────────────────────────────────────────── */
-  function initHeroReveal() {
-    const lines = document.querySelectorAll('.hero-headline .line, .hero-headline em');
-    lines.forEach((line, i) => {
-      line.style.opacity = '0';
-      line.style.transform = 'translateY(40px)';
-      line.style.transition = `opacity 1s cubic-bezier(0.16, 1, 0.3, 1) ${0.15 + i * 0.12}s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) ${0.15 + i * 0.12}s`;
-    });
-
-    const heroReveal = document.querySelectorAll('[data-reveal]');
-    heroReveal.forEach((el, i) => {
-      el.style.transitionDelay = `${0.1 + i * 0.1}s`;
-    });
-
-    // Trigger after loader
-    setTimeout(() => {
-      lines.forEach(line => {
-        line.style.opacity = '1';
-        line.style.transform = 'translateY(0)';
-      });
-      heroReveal.forEach(el => el.classList.add('visible'));
-    }, 100);
-  }
-
-  /* ──────────────────────────────────────────
-     SERVICE CARDS — tilt on hover
-  ────────────────────────────────────────── */
-  function initTilt() {
-    const cards = document.querySelectorAll('.service-card, .result-card, .testimonial');
-    cards.forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        card.style.transform = `perspective(800px) rotateY(${x * 3}deg) rotateX(${-y * 3}deg) translateZ(4px)`;
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-      });
-    });
-  }
-
-  /* ──────────────────────────────────────────
-     SMOOTH SCROLL
-  ────────────────────────────────────────── */
-  function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', (e) => {
-        const target = document.querySelector(anchor.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-  }
-
-  /* ──────────────────────────────────────────
-     FLOAT CTA — show after scroll
-  ────────────────────────────────────────── */
-  function initFloatCTA() {
-    const floatCTA = document.getElementById('floatCTA');
-    if (!floatCTA) return;
-    floatCTA.style.opacity = '0';
-    floatCTA.style.transform = 'scale(0.8)';
-    floatCTA.style.transition = 'opacity 0.5s, transform 0.5s';
-
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        floatCTA.style.opacity = '1';
-        floatCTA.style.transform = 'scale(1)';
-      } else {
-        floatCTA.style.opacity = '0';
-        floatCTA.style.transform = 'scale(0.8)';
-      }
-    }, { passive: true });
-  }
-
-  /* ──────────────────────────────────────────
-     MARQUEE — pause on hover
-  ────────────────────────────────────────── */
-  function initMarquee() {
-    const inner = document.querySelector('.marquee-inner');
-    if (!inner) return;
-    inner.addEventListener('mouseenter', () => inner.style.animationPlayState = 'paused');
-    inner.addEventListener('mouseleave', () => inner.style.animationPlayState = 'running');
-  }
-
-  /* ──────────────────────────────────────────
-     SCROLL VELOCITY effect on marquee speed
-  ────────────────────────────────────────── */
-  function initScrollVelocity() {
-    let lastScroll = 0;
-    let velocity = 0;
-    const inner = document.querySelector('.marquee-inner');
-    if (!inner) return;
-
-    window.addEventListener('scroll', () => {
-      const current = window.scrollY;
-      velocity = Math.abs(current - lastScroll);
-      lastScroll = current;
-
-      const speed = Math.max(28 - velocity * 0.5, 8);
-      inner.style.animationDuration = speed + 's';
-    }, { passive: true });
-  }
-
-  /* ──────────────────────────────────────────
-     INIT — called after loader finishes
-  ────────────────────────────────────────── */
-  function initAnimations() {
-    initHeroReveal();
-    initHeroCanvas();
-    initCtaCanvas();
-    initReveal();
-    initCountUp();
-    initMagnetic();
-    initTilt();
-  }
-
-  /* ──────────────────────────────────────────
-     BOOT — run immediately
-  ────────────────────────────────────────── */
-  initNav();
-  initSmoothScroll();
-  initFloatCTA();
-  initMarquee();
-  initScrollVelocity();
-
-})();
+<script src="script.js"></script>
+</body>
+</html>
